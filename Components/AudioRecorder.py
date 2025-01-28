@@ -1,14 +1,4 @@
-import pyaudio
 import sounddevice as sd
-import wave
-import time
-import librosa
-import torch
-from datetime import datetime
-import numpy as np
-import queue
-import threading
-import os
 
 class AudioRecorder:
     def __init__(self, channels=1, sample_rate=44100, dtype='int16'):
