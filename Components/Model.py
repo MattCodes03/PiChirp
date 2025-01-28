@@ -6,7 +6,7 @@ class ConvLSTMModel(nn.Module):
     def __init__(self):
         super(ConvLSTMModel, self).__init__()
         
-        # Layer 1: 1D Convolution (processing time frames)
+        # Layer 1: 1D Convolution
         self.conv1 = nn.Conv1d(in_channels=64, out_channels=32, kernel_size=5, stride=2, padding=2)
         self.bn1 = nn.BatchNorm1d(32)
         self.dropout1 = nn.Dropout(0.3) 
@@ -24,13 +24,14 @@ class ConvLSTMModel(nn.Module):
         self.flatten = nn.Flatten()
 
          # LSTM Layer 1: Classify features
-        # Since we have a sequence of frames, input size will be the flattened output of the conv layers
+        # Input size will be the flattened output of the conv layers
         self.lstm1 = nn.LSTM(input_size=320, hidden_size=64, num_layers=1, batch_first=True, bidirectional=True)
         self.dropout_lstm1 = nn.Dropout(0.3)  # Dropout after the first LSTM
         
-        # LSTM Layer 2: Map classification information to a 4D vector
+        # LSTM Layer 2: Map to a 4D vector
         self.lstm2 = nn.LSTM(input_size=128, hidden_size=5, num_layers=1, batch_first=True, bidirectional=True)
 
+        # Dense Layer: Maps the LSTM output to the 5 classes, input size of 10 as LSTM 2 is bidirectional (logit can then be softmaxed to determine probability of each class)
         self.fc = nn.Linear(10, 5)
 
     def forward(self, x):
