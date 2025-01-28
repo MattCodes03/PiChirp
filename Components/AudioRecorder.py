@@ -17,10 +17,8 @@ class AudioRecorder:
         self.dtype = dtype
 
     def record_audio(self, duration=10):
-        """Records audio for a specified duration (in seconds)."""
         print(f"Recording audio for {duration} seconds...")
-        audio_data = sd.rec(int(duration * self.sample_rate), samplerate=self.sample_rate,
-                            channels=self.channels, dtype=self.dtype)
+        audio_data = sd.rec(int(duration * self.sample_rate), samplerate=self.sample_rate, channels=self.channels, dtype=self.dtype)
         sd.wait()  # Wait until recording is finished
         print("Recording complete.")
         return audio_data.tobytes()
