@@ -26,7 +26,7 @@ class ConvLSTMModel(nn.Module):
          # LSTM Layer 1: Classify features
         # Input size will be the flattened output of the conv layers
         self.lstm1 = nn.LSTM(input_size=320, hidden_size=64, num_layers=1, batch_first=True, bidirectional=True)
-        self.dropout_lstm1 = nn.Dropout(0.3)  # Dropout after the first LSTM
+        self.dropout_lstm1 = nn.Dropout(0.3) 
         
         # LSTM Layer 2: Map to a 4D vector
         self.lstm2 = nn.LSTM(input_size=128, hidden_size=5, num_layers=1, batch_first=True, bidirectional=True)
@@ -39,10 +39,10 @@ class ConvLSTMModel(nn.Module):
         
         # Forward pass through the convolutional layers with batch normalization and ReLU
         x = F.relu(self.bn1(self.conv1(x)))
-        x = self.dropout1(x)  # Apply dropout after the first convolution
+        x = self.dropout1(x) 
         x = F.relu(self.bn2(self.conv2(x)))
         x = F.relu(self.bn3(self.conv3(x)))
-        x = self.dropout3(x)  # Apply dropout after the third convolution
+        x = self.dropout3(x) 
         
         # Flatten the output for LSTM input
         x = self.flatten(x)
@@ -52,7 +52,7 @@ class ConvLSTMModel(nn.Module):
         
         # Pass through LSTM layers
         x, (hn, cn) = self.lstm1(x)  # Output from LSTM Layer 1
-        x = self.dropout_lstm1(x)  # Apply dropout after the first LSTM layer
+        x = self.dropout_lstm1(x)
         
         x, (hn, cn) = self.lstm2(x)  # Output from LSTM Layer 2
 
