@@ -56,7 +56,7 @@ class ConvLSTMModel(nn.Module):
         
         x, (hn, cn) = self.lstm2(x)  # Output from LSTM Layer 2
 
-        # Output from the last timestep of LSTM 2
+        # Output (Raw Logit) from the last timestep of LSTM 2
         x = x[:, -1, :]
         x = self.fc(x)
         
