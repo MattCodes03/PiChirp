@@ -28,7 +28,6 @@ class ConvLSTMModel(nn.Module):
         self.lstm1 = nn.LSTM(input_size=320, hidden_size=64, num_layers=1, batch_first=True, bidirectional=True)
         self.dropout_lstm1 = nn.Dropout(0.3) 
         
-        # LSTM Layer 2: Map to a 4D vector
         self.lstm2 = nn.LSTM(input_size=128, hidden_size=5, num_layers=1, batch_first=True, bidirectional=True)
 
         # Dense Layer: Maps the LSTM output to the 5 classes, input size of 10 as LSTM 2 is bidirectional (logit can then be softmaxed to determine probability of each class)
