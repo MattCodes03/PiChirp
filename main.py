@@ -24,9 +24,9 @@ while True:
         print("No audio chunk received.")
         continue
 
-    index, prob = classifier(audio_chunk)
+    index, prob, inference = classifier(audio_chunk)
 
     if index is not None and prob >= 0.6:
-        print(f'Predicted Class - {labels[index]}, Probability - {prob:.2f}')
+        print(f'Predicted Class - {labels[index]}, Probability - {prob:.2f}, Inference Time: {inference:.6f} secs')
     else:
         print("Not enough data for prediction yet...")
