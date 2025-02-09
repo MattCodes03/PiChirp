@@ -1,6 +1,7 @@
 import numpy as np
 import librosa
 import torch
+import time
 
 class Classifier:
 	def __init__(self, model):
@@ -48,12 +49,17 @@ class Classifier:
 		print("Classification Started!")
 		mel_spec = self.process_audio(audio_chunk)
 
+		start_time = time.time()
+
 		with torch.no_grad():
 			output = self.model(mel_spec)
 			probability = torch.nn.functional.softmax(output, dim=1).squeeze(0).numpy()
+
+		end_time = time.time()
+		inference_time = end_time - start_time
 
 		# Find the class with the highest probability
 		max_prob = np.max(probability)
 		index = np.argmax(probability)
 
-		return index, max_prob
+		return index, max_prob, inference_time
